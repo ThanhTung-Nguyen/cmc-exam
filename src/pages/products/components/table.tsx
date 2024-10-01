@@ -1,68 +1,96 @@
-import { Button, Table } from 'antd'
-import  { ColumnType } from 'antd/es/table'
+import { Button, Table } from "antd";
+import { ColumnType } from "antd/es/table";
 // import {Table} from 'antd'
-import { IProductsData } from '../../../type/product'
-
+import { IProductData } from "../../../type/product";
 
 interface IPropsProductsTable {
-    onRedirectDetailPage: (id?: string) => void
+  onRedirectDetailPage: (id?: string) => void;
+  productList: IProductData[];
+  loading?: boolean;
+  currentPage?: number;
+  setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
+  pageSize?: number;
+  setPageSize?: React.Dispatch<React.SetStateAction<number>>;
 }
-const ProductsTable = ({onRedirectDetailPage}:IPropsProductsTable) => {
-    const fakeData = [
-        {
-            id:'dsfsdg-dfgfdfd-12787-fdgdf',
-            name: 'Bim Bim',
-            price: '100000',
-            description:'BimBim tao chế'
-        },
-        {
-            id:'dsfsdg-dfgfdfd-12577-fdgdf',
-            name: 'Nước lọc',
-            price: '100000',
-            description:'Nước uống đóng chai tinh khiết'
-        },
-    ]
-    const columns: ColumnType<IProductsData> = [
-        {
-            title:'STT',
-            dataIndex:'',
-            render: (_, record, index) => index + 1,
-            align:'center'
-        },
+const ProductsTable = ({
+  onRedirectDetailPage,
+  productList,
+  loading,
+  currentPage,
+  setCurrentPage,
+  pageSize,
+  setPageSize,
+}: IPropsProductsTable) => {
+  const columns: ColumnType<IProductData>[] = [
+    {
+      title: "STT",
+      dataIndex: "",
+      render: (_, record, index) =>
+        currentPage && pageSize
+          ? (currentPage - 1) * pageSize + index + 1
+          : index,
+      align: "center",
+      width: 70,
+    },
 
-        {
-            title:"Tên sản phẩm",
-            dataIndex:'name',
-        },
-        {
-            title:'Giá',
-            dataIndex:'price',
-            align:'right'
-        },
-        {
-            title:"Mô tả",
-            dataIndex:'description'
-        },
-        {
-            title:'Hành động',
-            render: (value) => {
-                console.log(value);
-                
-                return <Button type='primary' onClick={()=>onRedirectDetailPage?.(value?.id)}>Xem chi tiết</Button>
-            }
-        }
-    ]
+    {
+      title: <div style={{ textAlign: "center" }}>Tên sản phẩm</div>,
+      dataIndex: "name",
+      width: 350,
+    },
+    {
+      title: <div style={{ textAlign: "center" }}>Giá</div>,
+      dataIndex: "price",
+      align: "right",
+      width: 100,
+      render: (value) => {
+        return <>{`${value} $`}</>;
+      },
+    },
+    {
+      title: <div style={{ textAlign: "center" }}>Mô tả</div>,
+      dataIndex: "description",
+    },
+    {
+      title: "Hành động",
+      width: 150,
+      align: "center",
+      render: (value) => {
+        return (
+          <Button
+            type="primary"
+            onClick={() => onRedirectDetailPage?.(value?.id)}
+          >
+            Xem chi tiết
+          </Button>
+        );
+      },
+    },
+  ];
   return (
     <Table
-    dataSource={fakeData ??[]}
-    columns={columns}
-    onRow={record => ({
+      dataSource={productList}
+      columns={columns}
+      loading={loading}
+      pagination={{
+        pageSize: pageSize,
+        pageSizeOptions: ["10", "20", "30", "50"],
+        showSizeChanger: true,
+        // onShowSizeChange: (current, size) => setPageSize?.(size),
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
+        onChange: (page, size) => {
+          setCurrentPage?.(page);
+          setPageSize?.(size);
+        },
+      }}
+      scroll={{ y: "70vh" }}
+      onRow={(record) => ({
         onDoubleClick: () => {
-            onRedirectDetailPage?.(record.id ?? "");
-          },
-    })}
+          onRedirectDetailPage?.(record.id ?? "");
+        },
+      })}
     />
-  )
-}
+  );
+};
 
-export default ProductsTable
+export default ProductsTable;

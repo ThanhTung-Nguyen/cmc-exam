@@ -4,8 +4,6 @@ import "./App.css";
 import router from "./routes/router";
 
 function App() {
-console.log(import.meta.env.VITE_BASE_URL);
-
   return (
     <Suspense>
       <BrowserRouter>

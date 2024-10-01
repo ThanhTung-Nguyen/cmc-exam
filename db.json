@@ -1,22 +1,28 @@
 {
-    "products": [
-        {
-            "id":"absd-sfdg-12578-dgfdg",
-            "name": "Bim Bim",
-            "price": 10000,
-            "description": "Bim bim giòn dai cay cay"
-        },
-        {
-            "id":"absd-sfdg-12577-dgfdg",
-            "name": "Nước lọc",
-            "price": 5000,
-            "description":"Nước lọc tinh khiết chưng cất kỹ lưỡng"
-        },
-        {
-            "id":"absd-sfdg-9304-dgfdg",
-            "name": "Mì tôm",
-            "price": 3500,
-            "description":"Nói là mì tôm nhưng thực chất chỉ có mì thôi, không có tôm đâu"
-        }
+  "product1": {
+    "status": 1,
+    "code": "SUCCESS",
+    "message": "SUCCESS",
+    "data": [
+      {
+        "id": "absd-sfdg-12578-dgfdg",
+        "name": "Bim Bim",
+        "price": 10000,
+        "description": "Bim bim giòn dai cay cay"
+      },
+      {
+        "id": "absd-sfdg-12577-dgfdg",
+        "name": "Nước lọc",
+        "price": 5000,
+        "description": "Nước lọc tinh khiết chưng cất kỹ lưỡng"
+      },
+      {
+        "id": "absd-sfdg-9304-dgfdg",
+        "name": "Mì tôm",
+        "price": 3500,
+        "description": "Nói là mì tôm nhưng thực chất chỉ có mì thôi, không có tôm đâu"
+      }
     ]
+  },
+  "dssdfdsf": {}
 }

@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import ContentComponent from "./content";
 import HeaderComponent from "./header";
 import SideBar from "./menu";
-import FooterComponent from "./footer";
+// import FooterComponent from "./footer";
 
 const MainLayout = () => {
   // const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -34,7 +34,7 @@ const MainLayout = () => {
         >
           <Layout>
             <ContentComponent />
-            <FooterComponent />
+            {/* <FooterComponent /> */}
           </Layout>
         </Suspense>
       </Layout>

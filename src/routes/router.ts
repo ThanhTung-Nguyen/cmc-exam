@@ -8,6 +8,9 @@ const MainLayout = React.lazy(() => import("../pages/layout"));
 const ProductsList = React.lazy(() => import("../pages/products"));
 const Management = React.lazy(() => import("../pages/management"));
 const ProductDetail = React.lazy(() => import("../pages/products/form/detail"));
+const ProductCreate = React.lazy(
+  () => import("../pages/management/form/create")
+);
 const router: TFormRouter[] = [
   {
     path: path.login,
@@ -28,6 +31,10 @@ const router: TFormRouter[] = [
       {
         path: path.productDetail,
         element: ProductDetail,
+      },
+      {
+        path: path.productCreate,
+        element: ProductCreate,
       },
     ],
   },
