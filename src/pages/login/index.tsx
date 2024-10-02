@@ -2,8 +2,8 @@ import { ExclamationCircleFilled } from "@ant-design/icons/lib/icons";
 import { Button, Form, Input, notification, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchUserList } from "../../redux/action/auth.action";
-import { setUserData } from "../../redux/reducer/auth.reducer";
+import { fetchUserList, loginAsync } from "../../redux/action/auth.action";
+// import { setUserData } from "../../redux/reducer/auth.reducer";
 import path from "../../routes/path";
 import { useAppDispatch, useAppSelector } from "../../stores/hooks";
 import { IUserData } from "../../type/auth";
@@ -15,7 +15,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { userList } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState<boolean>(false);
-  const token = localStorage.getItem(TOKEN);
+  const token = localStorage.getItem(TOKEN) as string;
   useEffect(() => {
     dispatch(fetchUserList());
   }, []);
@@ -25,6 +25,7 @@ const LoginPage = () => {
       navigate(path.home);
     }
   }, []);
+
   const onFinish = (value: IUserData) => {
     setLoading(true);
     if (userList) {
@@ -37,8 +38,7 @@ const LoginPage = () => {
         findUser?.password == value.password
       ) {
         setLoading(false);
-        dispatch(setUserData(findUser));
-        localStorage.setItem(TOKEN, JSON.stringify(findUser?.token));
+        dispatch(loginAsync(value.username));
         navigate(path.home);
       } else {
         setLoading(false);

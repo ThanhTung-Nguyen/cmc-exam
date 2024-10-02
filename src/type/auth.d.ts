@@ -1,6 +1,6 @@
 export type IUserData = {
-  username?: string;
-  password?: string;
+  username: string;
+  password: string;
   role?: string;
   token?: string;
 };

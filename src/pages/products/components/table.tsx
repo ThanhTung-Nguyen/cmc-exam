@@ -69,6 +69,7 @@ const ProductsTable = ({
   ];
   return (
     <Table
+      rowKey="id"
       dataSource={productList}
       columns={columns}
       loading={loading}

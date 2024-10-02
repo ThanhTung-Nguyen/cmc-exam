@@ -1,24 +1,31 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
+import { openNotification } from "../../../../components/noti-custom";
 import { addProduct } from "../../../../redux/action/product.action";
-import { useAppDispatch } from "../../../../stores/hooks";
-import { WrapProductForm } from "../../../styled";
+import path from "../../../../routes/path";
+import { useAppDispatch, useAppSelector } from "../../../../stores/hooks";
 import { IProductData } from "../../../../type/product";
+import { WrapProductForm } from "../../../styled";
 
 const ProductCreateFrom = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.auth);
+
   const onFinish = (value: IProductData) => {
-    console.log(value);
-    const newValue = {
-      ...value,
-    };
-    dispatch(addProduct(newValue));
-    // navigate("/cmc/product/" + newValue.id);
+    dispatch(addProduct(value)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        openNotification("success", "Thêm mới thành công", 3, "topRight");
+        navigate(path.management);
+      }
+    });
   };
-  return (
+  return user.role == "admin" ? (
     <WrapProductForm>
-      <Form title="Tạo mới sản phẩm" layout="vertical" onFinish={onFinish}>
+      <Typography.Title style={{ margin: 0 }}>
+        Thêm mới sản phẩm
+      </Typography.Title>
+      <Form layout="vertical" onFinish={onFinish}>
         <Form.Item name="name" label="Tên sản phẩm">
           <Input placeholder="Nhập tên sản phẩm" />
         </Form.Item>
@@ -35,6 +42,8 @@ const ProductCreateFrom = () => {
         </Form.Item>
       </Form>
     </WrapProductForm>
+  ) : (
+    "Bạn không có quyền truy cập"
   );
 };
 

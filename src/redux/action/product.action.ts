@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  deleteProductById,
+  editProduct,
   getProductDetail,
   getProductList,
   postProduct,
@@ -12,7 +14,7 @@ export const fetchProductList = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await getProductList();
-      return res.data;
+      return res.data as IProductData[];
     } catch (err) {
       return rejectWithValue(err || "Lỗi");
     }
@@ -25,7 +27,7 @@ export const fetchProductDetail = createAsyncThunk(
   async (id: string, { rejectWithValue }) => {
     try {
       const res = await getProductDetail(id);
-      return res.data;
+      return res.data as IProductData;
     } catch (err) {
       return rejectWithValue(err || "Lỗi");
     }
@@ -38,6 +40,30 @@ export const addProduct = createAsyncThunk(
     try {
       const res = await postProduct(product);
       return res.data;
+    } catch (err) {
+      return rejectWithValue(err || "Lỗi");
+    }
+  }
+);
+
+export const updateProduct = createAsyncThunk<
+  IProductData,
+  { id: string; payload: IProductData }
+>("product/updateProduct", async ({ id, payload }, { rejectWithValue }) => {
+  try {
+    const res = await editProduct(id, payload);
+    return res.data;
+  } catch (err) {
+    return rejectWithValue(err || "Lỗi");
+  }
+});
+
+export const deleteProduct = createAsyncThunk(
+  "product/deleteProduct",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const res = await deleteProductById(id);
+      return res.data as IProductData;
     } catch (err) {
       return rejectWithValue(err || "Lỗi");
     }

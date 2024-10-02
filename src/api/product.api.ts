@@ -13,3 +13,11 @@ export const getProductDetail = (id: string) => {
 export const postProduct = (product: IProductData) => {
   return axiosInstance.post(PRODUCT_URL, product);
 };
+
+export const editProduct = (id: string, payload: IProductData) => {
+  return axiosInstance.put(PRODUCT_URL + "/" + id, payload);
+};
+
+export const deleteProductById = (id: string) => {
+  return axiosInstance.delete(PRODUCT_URL + "/" + id);
+};

@@ -27,13 +27,13 @@ const ProductsPage = () => {
   return (
     <div>
       <ProductsTable
-        onRedirectDetailPage={onRedirectDetailPage}
-        productList={productList}
         loading={loading}
+        productList={productList}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         pageSize={pageSize}
         setPageSize={setPageSize}
+        onRedirectDetailPage={onRedirectDetailPage}
       />
     </div>
   );

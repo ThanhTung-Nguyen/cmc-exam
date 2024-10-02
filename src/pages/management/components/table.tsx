@@ -1,4 +1,4 @@
-import { Button, Space, Table } from "antd";
+import { Button, Popconfirm, Space, Table } from "antd";
 import { ColumnType } from "antd/es/table";
 import { IProductData } from "../../../type/product";
 import { useAppSelector } from "../../../stores/hooks";
@@ -11,7 +11,9 @@ interface IPropsTable {
   setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
   pageSize?: number;
   setPageSize?: React.Dispatch<React.SetStateAction<number>>;
-  onRedirectFormCreate: () => void;
+  onRedirectCreateForm: () => void;
+  onRedirectUpdateForm: (id?: string) => void;
+  handleDeleteProduct: (id: string) => void;
 }
 const ProductManagementTable = ({
   productList,
@@ -20,7 +22,9 @@ const ProductManagementTable = ({
   setCurrentPage,
   pageSize,
   setPageSize,
-  onRedirectFormCreate,
+  onRedirectCreateForm,
+  onRedirectUpdateForm,
+  handleDeleteProduct,
 }: IPropsTable) => {
   const { user } = useAppSelector((state) => state.auth);
   const columns: ColumnType<IProductData>[] = [
@@ -64,13 +68,23 @@ const ProductManagementTable = ({
               type="text"
               icon={<EditFilled />}
               disabled={user.role !== ROLE_ADMIN}
+              onClick={() => onRedirectUpdateForm?.(value?.id)}
             />
-            <Button
-              type="primary"
-              danger
-              icon={<DeleteFilled />}
-              disabled={user.role !== ROLE_ADMIN}
-            />
+            <Popconfirm
+              title="Xóa sản phẩm"
+              description="Bạn có chắc chắn muốn xóa sản phẩm này không?"
+              onConfirm={() => handleDeleteProduct(value?.id)}
+              // onCancel={cancel}
+              okText="Đồng ý"
+              cancelText="Hủy"
+            >
+              <Button
+                type="primary"
+                danger
+                icon={<DeleteFilled />}
+                disabled={user.role !== ROLE_ADMIN}
+              />
+            </Popconfirm>
           </Space>
         );
       },
@@ -78,6 +92,7 @@ const ProductManagementTable = ({
   ];
   return (
     <Table
+      rowKey="id"
       columns={columns}
       dataSource={productList}
       loading={loading}
@@ -92,11 +107,7 @@ const ProductManagementTable = ({
           setPageSize?.(size);
         },
       }}
-      title={() =>
-        user.role == ROLE_ADMIN && (
-          <Button onClick={onRedirectFormCreate}>Thêm mới</Button>
-        )
-      }
+      title={() => <Button onClick={onRedirectCreateForm}>Thêm mới</Button>}
     />
   );
 };

@@ -11,6 +11,7 @@ const ProductDetail = React.lazy(() => import("../pages/products/form/detail"));
 const ProductCreate = React.lazy(
   () => import("../pages/management/form/create")
 );
+const ProductEdit = React.lazy(() => import("../pages/management/form/update"));
 const router: TFormRouter[] = [
   {
     path: path.login,
@@ -35,6 +36,10 @@ const router: TFormRouter[] = [
       {
         path: path.productCreate,
         element: ProductCreate,
+      },
+      {
+        path: path.productEdit,
+        element: ProductEdit,
       },
     ],
   },
