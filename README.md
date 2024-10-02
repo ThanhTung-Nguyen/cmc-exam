@@ -14,3 +14,13 @@ Run:
 ```js
   yarn dev
 ```
+
+## Tài khoản
+
+Admin:
+- username: admin
+- password: 123456
+
+user:
+- username: user || user2
+- password: 123456
