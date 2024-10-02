@@ -1,27 +1,27 @@
 import { ExclamationCircleFilled } from "@ant-design/icons/lib/icons";
-import { Button, Form, Input, notification, Typography } from "antd";
+import { Button, Form, Input, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { openNotification } from "../../components/noti-custom";
+import { USER_DATA } from "../../constants";
 import { fetchUserList, loginAsync } from "../../redux/action/auth.action";
-// import { setUserData } from "../../redux/reducer/auth.reducer";
 import path from "../../routes/path";
 import { useAppDispatch, useAppSelector } from "../../stores/hooks";
 import { IUserData } from "../../type/auth";
 import { WrapLoginForm, WrapLoginPage } from "../styled";
-import { TOKEN } from "../../constants";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { userList } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState<boolean>(false);
-  const token = localStorage.getItem(TOKEN) as string;
   useEffect(() => {
     dispatch(fetchUserList());
   }, []);
 
   useEffect(() => {
-    if (token) {
+    const userData = JSON.parse(localStorage.getItem(USER_DATA)!);
+    if (userData?.token) {
       navigate(path.home);
     }
   }, []);
@@ -42,11 +42,12 @@ const LoginPage = () => {
         navigate(path.home);
       } else {
         setLoading(false);
-        notification.error({
-          message: "Sai thông tin đăng nhập!",
-          duration: 1,
-          placement: "topRight",
-        });
+        openNotification(
+          "error",
+          "Thông tin đăng nhập không chính xác",
+          3,
+          "topRight"
+        );
       }
     }
   };
@@ -54,8 +55,7 @@ const LoginPage = () => {
   return (
     <WrapLoginPage>
       <WrapLoginForm>
-        {/* <Typography.Title>CMC Cyber Security</Typography.Title> */}
-        <Typography.Title>Med Station CMS</Typography.Title>
+        <Typography.Title>CMC Cyber Security</Typography.Title>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item
             name="username"

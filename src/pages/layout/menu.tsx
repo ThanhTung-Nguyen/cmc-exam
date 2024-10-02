@@ -4,6 +4,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import path from "../../routes/path";
 import { useAppSelector } from "../../stores/hooks";
+import { ROLE_ADMIN } from "../../constants";
 
 type MenuItem = Required<MenuProps>["items"][number];
 const { Sider } = Layout;
@@ -27,7 +28,7 @@ const SideBar = () => {
   const items: MenuItem[] = [
     getItem("Sản phẩm", path.home, "", [
       getItem("Danh sách sản phẩm", path.products),
-      ...(user.role === "admin"
+      ...(user.role === ROLE_ADMIN
         ? [getItem("Quản lý sản phẩm", path.management)]
         : []),
     ]),

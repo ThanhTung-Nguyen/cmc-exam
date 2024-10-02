@@ -6,6 +6,7 @@ import path from "../../../../routes/path";
 import { useAppDispatch, useAppSelector } from "../../../../stores/hooks";
 import { IProductData } from "../../../../type/product";
 import { WrapProductForm } from "../../../styled";
+import { ROLE_ADMIN } from "../../../../constants";
 
 const ProductCreateFrom = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ const ProductCreateFrom = () => {
       }
     });
   };
-  return user.role == "admin" ? (
+  return user.role === ROLE_ADMIN ? (
     <WrapProductForm>
       <Typography.Title style={{ margin: 0 }}>
         Thêm mới sản phẩm
@@ -43,7 +44,7 @@ const ProductCreateFrom = () => {
       </Form>
     </WrapProductForm>
   ) : (
-    "Bạn không có quyền truy cập"
+    <>Bạn không có quyền truy cập</>
   );
 };
 

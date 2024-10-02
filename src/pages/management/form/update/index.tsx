@@ -11,6 +11,7 @@ import path from "../../../../routes/path";
 import { useAppDispatch, useAppSelector } from "../../../../stores/hooks";
 import { IProductData } from "../../../../type/product";
 import { WrapProductForm } from "../../../styled";
+import { ROLE_ADMIN } from "../../../../constants";
 
 const ProductManagementEdit = () => {
   const dispatch = useAppDispatch();
@@ -47,7 +48,7 @@ const ProductManagementEdit = () => {
     });
   };
 
-  return user.role === "admin" ? (
+  return user.role === ROLE_ADMIN ? (
     <WrapProductForm>
       <Typography.Title>Chỉnh sửa sản phẩm</Typography.Title>
       <Spin spinning={loading}>
@@ -70,7 +71,7 @@ const ProductManagementEdit = () => {
       </Spin>
     </WrapProductForm>
   ) : (
-    "Bạn không có quyền truy cập"
+    <>Bạn không có quyền truy cập</>
   );
 };
 

@@ -1,22 +1,16 @@
 import { Layout, Spin } from "antd";
 import { Suspense } from "react";
 import ContentComponent from "./content";
+import FooterComponent from "./footer";
 import HeaderComponent from "./header";
 import SideBar from "./menu";
-// import FooterComponent from "./footer";
 
 const MainLayout = () => {
-  // const [collapsed, setCollapsed] = useState<boolean>(false);
   return (
     <Layout style={{ height: "99.9vh" }}>
-      <HeaderComponent
-      // collapsed={collapsed}
-      // setCollapsed={setCollapsed}
-      />
+      <HeaderComponent />
       <Layout>
-        <SideBar
-        // collapsed={collapsed}
-        />
+        <SideBar />
         <Suspense
           fallback={
             <div
@@ -34,7 +28,7 @@ const MainLayout = () => {
         >
           <Layout>
             <ContentComponent />
-            {/* <FooterComponent /> */}
+            <FooterComponent />
           </Layout>
         </Suspense>
       </Layout>

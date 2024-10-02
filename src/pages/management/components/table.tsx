@@ -1,9 +1,7 @@
+import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { Button, Popconfirm, Space, Table } from "antd";
 import { ColumnType } from "antd/es/table";
 import { IProductData } from "../../../type/product";
-import { useAppSelector } from "../../../stores/hooks";
-import { EditFilled, DeleteFilled } from "@ant-design/icons";
-import { ROLE_ADMIN } from "../../../constants";
 interface IPropsTable {
   productList: IProductData[];
   loading: boolean;
@@ -26,7 +24,6 @@ const ProductManagementTable = ({
   onRedirectUpdateForm,
   handleDeleteProduct,
 }: IPropsTable) => {
-  const { user } = useAppSelector((state) => state.auth);
   const columns: ColumnType<IProductData>[] = [
     {
       title: "STT",
@@ -67,7 +64,6 @@ const ProductManagementTable = ({
             <Button
               type="text"
               icon={<EditFilled />}
-              disabled={user.role !== ROLE_ADMIN}
               onClick={() => onRedirectUpdateForm?.(value?.id)}
             />
             <Popconfirm
@@ -78,12 +74,7 @@ const ProductManagementTable = ({
               okText="Đồng ý"
               cancelText="Hủy"
             >
-              <Button
-                type="primary"
-                danger
-                icon={<DeleteFilled />}
-                disabled={user.role !== ROLE_ADMIN}
-              />
+              <Button type="primary" danger icon={<DeleteFilled />} />
             </Popconfirm>
           </Space>
         );
@@ -107,6 +98,7 @@ const ProductManagementTable = ({
           setPageSize?.(size);
         },
       }}
+      scroll={{ y: "70vh" }}
       title={() => <Button onClick={onRedirectCreateForm}>Thêm mới</Button>}
     />
   );

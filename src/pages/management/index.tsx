@@ -9,6 +9,7 @@ import {
 import { resetProductListAction } from "../../redux/reducer/product.reducer";
 import path from "../../routes/path";
 import { openNotification } from "../../components/noti-custom";
+import { ROLE_ADMIN } from "../../constants";
 
 const ManagementPage = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const ManagementPage = () => {
       }
     });
   };
-  return user.role == "admin" ? (
+  return user.role === ROLE_ADMIN ? (
     <div>
       <ProductManagementTable
         productList={productList}
@@ -56,7 +57,7 @@ const ManagementPage = () => {
       />
     </div>
   ) : (
-    "Bạn không có quyền truy cập"
+    <>Bạn không có quyền truy cập</>
   );
 };
 
